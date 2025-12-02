@@ -1,0 +1,3 @@
+psql -h localhost -p 26277 -U root -d defaultdb
+
+

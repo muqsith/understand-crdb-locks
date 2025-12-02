@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const DatabaseConnector = require('./DatabaseConnector');
+const { delay } = require('./utils');
 
 const connectionString = 'postgresql://root@localhost:26277/defaultdb?sslmode=disable';
 const dbConnector = new DatabaseConnector(connectionString, 5);
@@ -44,6 +45,9 @@ async function createEmployee(employeeData, threadId = 0) {
       
       const values = [firstName, lastName, email, department || null, salary || null];
       const { rows } = await client.query(query, values);
+      
+      // Wait 3 seconds after insert
+      await delay(3000);
       
       await client.query('COMMIT');
       const duration = ((Date.now() - startTime) / 1000).toFixed(2);
